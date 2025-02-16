@@ -1,0 +1,44 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple PWA</title>
+    <link rel="manifest" href="manifest.json">
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/service-worker.js')
+                .then(reg => console.log('Service Worker registered', reg))
+                .catch(err => console.error('Service Worker registration failed', err));
+        }
+        let deferredPrompt;
+
+        window.addEventListener('beforeinstallprompt', (event) => {
+            event.preventDefault(); // Prevent auto-prompt
+            deferredPrompt = event;
+
+            // Show the install button
+            const installBtn = document.getElementById('install-btn');
+            installBtn.style.display = 'block';
+
+            installBtn.addEventListener('click', () => {
+                deferredPrompt.prompt(); // Show install prompt
+
+                deferredPrompt.userChoice.then((choice) => {
+                    if (choice.outcome === 'accepted') {
+                        console.log('PWA installed');
+                    } else {
+                        console.log('PWA installation dismissed');
+                    }
+                    deferredPrompt = null;
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Welcome to My very own PWA v.01</h1>
+    <p>This is a simple Progressive Web App.</p>
+    <button id="install-btn" style="display: none;">Install App</button>
+
+</body>
+</html>
