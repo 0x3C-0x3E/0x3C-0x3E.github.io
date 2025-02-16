@@ -1,44 +1,25 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple PWA</title>
-    <link rel="manifest" href="manifest.json">
-    <script>
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/service-worker.js')
-                .then(reg => console.log('Service Worker registered', reg))
-                .catch(err => console.error('Service Worker registration failed', err));
-        }
-        let deferredPrompt;
-
-        window.addEventListener('beforeinstallprompt', (event) => {
-            event.preventDefault(); // Prevent auto-prompt
-            deferredPrompt = event;
-
-            // Show the install button
-            const installBtn = document.getElementById('install-btn');
-            installBtn.style.display = 'block';
-
-            installBtn.addEventListener('click', () => {
-                deferredPrompt.prompt(); // Show install prompt
-
-                deferredPrompt.userChoice.then((choice) => {
-                    if (choice.outcome === 'accepted') {
-                        console.log('PWA installed');
-                    } else {
-                        console.log('PWA installation dismissed');
-                    }
-                    deferredPrompt = null;
-                });
-            });
-        });
-    </script>
+    <meta charset="utf-8">
+    <title> Simple PWA app</title>
+    <meta name="description" content="pwa example">
+    <meta name="author" content="me">
+    <meta name="theme-color" content="#B12A34">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:image" content="icons/icon-512.png">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="mainfest.webmanifest">
+    <script src="app.js" defer></script>
 </head>
 <body>
-    <h1>Welcome to My very own PWA v.01</h1>
-    <p>This is a simple Progressive Web App.</p>
-    <button id="install-btn" style="display: none;">Install App</button>
-
+<header>
+    <p>thing</p>
+</header>
+<main>
+    <h1>Hello World</h1>
+    <button id="notifications">Request dummy notifications</button>
+</main>
 </body>
 </html>
